@@ -17,6 +17,7 @@ export default function Home() {
   }, []);
 
   const [loading, setLoading] = useState(false);
+  const [input, setInput] = useState("");
   const getResponse = async (text: string) => {
     setLoading(true);
     const response = await fetch("http://localhost:8000/", {
