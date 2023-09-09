@@ -43,15 +43,24 @@ export default function Home() {
       if (data?.data?.url) {
         if (
           data?.data?.url ===
-            "https://jo.opensooq.com/en/cars/cars-for-sale/?search=true" ||
-          data?.data?.url.includes("undefined")
+          "https://jo.opensooq.com/en/cars/cars-for-sale/?search=true"
         ) {
           setMessages((messages) => {
             return [
               ...messages,
               {
                 from: "bot",
-                message: "I'm sorry, I didn't understand that.",
+                message: "I'm sorry, can you please be more specific?",
+              },
+            ];
+          });
+        } else if (data?.data?.url.includes("undefined")) {
+          setMessages((messages) => {
+            return [
+              ...messages,
+              {
+                from: "bot",
+                message: "I'm sorry, some error occurred.",
               },
             ];
           });
@@ -73,7 +82,7 @@ export default function Home() {
           ...messages,
           {
             from: "bot",
-            message: "I'm sorry, I didn't understand that.",
+            message: "I'm sorry, an error occurred.",
           },
         ];
       });
