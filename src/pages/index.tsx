@@ -79,7 +79,6 @@ export default function Home() {
       });
     }
     setLoading(false);
-    console.log(messages);
   };
 
   return (
