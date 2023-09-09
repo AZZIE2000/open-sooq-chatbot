@@ -18,6 +18,7 @@ export default function Home() {
   useEffect(() => {
     console.log(date);
   }, [date]);
+
   return (
     <>
       <Head>
