@@ -1,11 +1,11 @@
 import Head from "next/head";
-import Link from "next/link";
 import { useMemo, useState } from "react";
 import BotMessage from "~/components/bot-message";
 import LoadingMessage from "~/components/loading-message";
 import UserMessage from "~/components/user-message";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+
 export default function Home() {
   const [messages, setMessages] = useState([
     {
@@ -21,6 +21,7 @@ export default function Home() {
   const [input, setInput] = useState("");
 
   const handleSendMessage = async () => {
+    if (input.trim().length === 0) return;
     setLoading(true);
     setMessages((messages) => {
       return [
@@ -36,19 +37,35 @@ export default function Home() {
       text: input,
       convId,
     };
-    console.log(body);
+
     try {
       const data = await axios.post("http://localhost:8080/", body);
       if (data?.data?.url) {
-        setMessages((messages) => {
-          return [
-            ...messages,
-            {
-              from: "bot",
-              message: data?.data?.url,
-            },
-          ];
-        });
+        if (
+          data?.data?.url ===
+            "https://jo.opensooq.com/en/cars/cars-for-sale/?search=true" ||
+          data?.data?.url.includes("undefined")
+        ) {
+          setMessages((messages) => {
+            return [
+              ...messages,
+              {
+                from: "bot",
+                message: "I'm sorry, I didn't understand that.",
+              },
+            ];
+          });
+        } else {
+          setMessages((messages) => {
+            return [
+              ...messages,
+              {
+                from: "bot",
+                message: data?.data?.url,
+              },
+            ];
+          });
+        }
       }
     } catch (e) {
       setMessages((messages) => {
@@ -62,6 +79,7 @@ export default function Home() {
       });
     }
     setLoading(false);
+    console.log(messages);
   };
 
   return (
@@ -73,7 +91,7 @@ export default function Home() {
       </Head>
       <main className="max-h-screen  w-full  bg-white text-black">
         <div className="h-[calc(100vh-4rem)]">
-          <div className="grid grid-cols-12  gap-y-2 overflow-y-auto">
+          <div className="flex h-full  flex-col gap-y-2 overflow-y-auto">
             {messages.map((message, i) => {
               if (message.from === "bot") {
                 return <BotMessage key={i} message={message.message} />;

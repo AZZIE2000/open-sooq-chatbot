@@ -6,10 +6,9 @@ interface BotMessageProps {
   message: string;
 }
 
-// eslint-disable-next-line react/display-name
-const BotMessage: NextPage<BotMessageProps> = memo(({ message }) => {
+const BotMessage: NextPage<BotMessageProps> = ({ message }) => {
   return (
-    <div className="col-start-1 col-end-8 rounded-lg p-3">
+    <div className="rounded-lg p-3">
       <div className="flex flex-row items-center">
         <Image
           alt="Picture of the author"
@@ -20,7 +19,8 @@ const BotMessage: NextPage<BotMessageProps> = memo(({ message }) => {
         />
 
         <div className="relative ml-3 rounded-xl bg-white px-4 py-2 text-sm shadow">
-          {message === "Hi I'm OpenSooq New Bot, How can I help you?" ? (
+          {message === "Hi I'm OpenSooq New Bot, How can I help you?" ||
+          message.includes("sorry") ? (
             <div>{message}</div>
           ) : (
             <a className="link link-info " href={message} target="_blank">
@@ -31,6 +31,6 @@ const BotMessage: NextPage<BotMessageProps> = memo(({ message }) => {
       </div>
     </div>
   );
-});
+};
 
 export default BotMessage;
