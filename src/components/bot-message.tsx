@@ -19,8 +19,7 @@ const BotMessage: NextPage<BotMessageProps> = ({ message }) => {
         />
 
         <div className="relative ml-3 rounded-xl bg-white px-4 py-2 text-sm shadow">
-          {message === "Hi I'm OpenSooq New Bot, How can I help you?" ||
-          message.includes("sorry") ? (
+          {message.includes("help") || message.includes("sorry") ? (
             <div>{message}</div>
           ) : (
             <a className="link link-info " href={message} target="_blank">
