@@ -50,7 +50,7 @@ export default function Home() {
               ...messages,
               {
                 from: "bot",
-                message: "I can help you find the your dream car, you please be more specific?",
+                message: "I can help you find the your dream car, Can you please be more specific?",
               },
             ];
           });
